@@ -1,0 +1,58 @@
+<div class="profile col-md-offset-1">
+    <h2 class="">Раздел книг</h2>
+    
+    <h3 class="">Книги пользователя</h3>
+    <% if(OwnBooks.length != 0) { %>     
+        <ul>
+            <% for(var index in OwnBooks) { %>
+                <li id="liBookId<%= OwnBooks[index].idBook %>" data-id="<%= OwnBooks[index].idBook %>"><a href="/book/<%= OwnBooks[index].idBook %>"><%=OwnBooks[index].Title %></a></li>
+            <% } %>
+        </ul>          
+    <% } else { %>
+        <h4 >У пользователя нет своих книг в данный момент</h4>
+    <% } %>
+
+    <h3 class="">Книги с доступом для редактирования и чтения</h3>
+    <% if(ReadAndEditBooks.length != 0) { %> 
+        <ul>
+            <% for(var index in ReadAndEditBooks) { %>
+                <li id="liBookId<%= ReadAndEditBooks[index].idBook %>" data-id="<%= ReadAndEditBooks[index].idBook %>"><a href="/book/<%= ReadAndEditBooks[index].idBook %>"><%=ReadAndEditBooks[index].Title %></a></li>
+            <% } %>
+        </ul>          
+    <% } else { %>
+        <h4 >У пользователя нет книг с данными правами</h4>
+    <% } %>
+
+    <h3 class="">Книги только для чтения</h3>
+    <% if(ReadOnlyBooks.length != 0) { %> 
+        <ul>
+            <% for(var index in ReadOnlyBooks) { %>
+                <li id="liBookId<%= ReadOnlyBooks[index].idBook %>" data-id="<%= ReadOnlyBooks[index].idBook %>"><a href="/book/<%= ReadOnlyBooks[index].idBook %>"><%=ReadOnlyBooks[index].Title %></a></li>
+            <% } %>
+        </ul>          
+    <% } else { %>
+        <h4 >У пользователя нет книг с данными правами</h4>
+    <% } %>
+</div>
+
+<script type="text/javascript">    
+
+    function ChoseBook(_idBook) {
+            $.ajax({
+                url: "/book/" + _idBook,
+                method: "GET",
+                success: function () {
+                    alert("Получилось");
+                },
+                error  : function() {
+                    alert("Ошибка");
+                }
+            })
+        }
+
+    $('body').on('click', '.bookLink', function (){
+            var ourUrl = window.location;
+            var idBook = $(this).data("id");
+            ChoseBook(idBook);
+        });
+</script>

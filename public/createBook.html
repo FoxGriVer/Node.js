@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Создание книги</h1>
+    <form action="/CreateBook" method="POST">
+        <p><label>id(tmp):</label></p>
+        <input type="number" name="bookId" /><br>
+        <p><label>Название книги:</label></p>
+        <input type="text" name="BookTitle" /><br>   
+        <p><label>Запись в книге:</label></p>
+        <input type="text" name="BookArticle" /><br>      
+        <p><input type="submit" value="Отправить" /></p>
+    </form>
+</body>
+</html>

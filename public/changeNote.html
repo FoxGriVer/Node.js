@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Создание записи</h1>
+    <form action="/changeNote" method="POST">
+        <p><label>id книги:</label></p>
+        <input type="number" name="idBook" /><br>
+        <p><label>id записи:</label></p>
+        <input type="number" name="idNote" /><br>        
+        <p><label>Новая запись в книге:</label></p>
+        <input type="text" name="noteText" /><br>      
+        <p><input type="submit" value="Отправить" /></p>
+    </form>
+</body>
+</html>

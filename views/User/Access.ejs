@@ -1,0 +1,61 @@
+<style>
+    .customRow {
+            margin-bottom: 4%;   
+            padding-left: 15%;
+            padding-right: 15%;
+            display: inline-block;         
+        }    
+
+    .accessBlock{
+            margin-top: 10%;
+            padding-left:30%;
+            padding-right: 30%;
+        }
+    .radioBlock {
+            margin-bottom: 5%;
+
+    }
+</style>
+    <div class="accessBlock offset-md-4 text-center">
+        <h2>Управление доступом к книгам</h2>
+        <form action="/access" method="POST">
+            <div class="fields">
+                <div class="form-group fields">
+                    <div class="row customRow">
+                        <label class="">Книга:</label>
+                        <select class="selectpicker" name="selectedBook">
+                            <% for(var index in OwnBooks) { %>
+                                <option><%=OwnBooks[index].Title %></option>
+                            <%}%>
+                        </select>
+                    </div>  
+
+                    <div class="radioBlock">
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="optradio" value="readOnly"> Только для чтения
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="optradio" value="readAndEdit"> Чтение и запись
+                            </label>
+                        </div>
+                        <div class="form-check-inline">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="optradio" value="limitAccess"> Ограничить доступ
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="row customRow">
+                        <label>Ник пользователя:</label>
+                        <input class="form-control customForm" name="nickName" />
+                    </div>                                                
+                </div>  
+            </div>                                          
+            <div class="btnReg panel-body">
+                <button type="submit" class="btn btn-sm btn-primary">Предоставить доступ</button>
+            </div>   
+        </form>
+    </div> 

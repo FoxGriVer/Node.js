@@ -1,0 +1,25 @@
+<style>
+.customRow {
+            margin-bottom: 4%;   
+            padding-left: 15%;
+            padding-right: 15%;
+            display: inline-block;         
+        }
+</style>
+
+<div class="offset-md-4 text-center">
+        <h2>Удаление пользователя</h2>
+        <form action="/deleteUser" method="POST">
+            <div class="fields">
+                <div class="form-group fields">
+                    <div class="row customRow">
+                        <label class="">Ник пользователя:</label>
+                        <input class="form-control customForm" name="nickName" />
+                    </div>                                                                  
+                </div>  
+            </div>                                          
+            <div class="btnReg panel-body">
+                <button type="submit" class="btn btn-sm btn-primary">Удалить</button>
+            </div>   
+        </form>
+    </div>  

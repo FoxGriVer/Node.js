@@ -1,0 +1,26 @@
+<style>
+.customRow {
+            margin-bottom: 4%;   
+            padding-left: 15%;
+            padding-right: 15%;
+            display: inline-block;         
+        }
+</style>
+
+<div class="CreateBookBlock offset-md-4 text-center">
+        <h2>Добавление книги</h2>
+        <form action="/createBook" method="POST">
+            <div class="fields">
+                <div class="form-group fields">
+                    <input type="hidden" name="idUser" value="<%=user.id %>" />                    
+                    <div class="row customRow">
+                        <label class="">Название книги:</label>
+                        <input class="form-control customForm" name="BookTitle" />
+                    </div>                                                                  
+                </div>  
+            </div>                                          
+            <div class="btnReg panel-body">
+                <button type="submit" class="btn btn-sm btn-primary">Добавить</button>
+            </div>   
+        </form>
+    </div>  

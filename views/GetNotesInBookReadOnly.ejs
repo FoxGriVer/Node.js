@@ -1,0 +1,28 @@
+<style>
+    .carpet {
+                padding-left: 5%;
+                padding-right: 15%;
+                font-size: 1.5em;
+            }
+    .row{
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+</style>
+<div class = "carpet">
+    <h2 class="offset-md-1">Список записей в книге "<%=note[0].title %>"</h2>
+
+    <% if(note.length != 0) { %>    
+        <table class="table table-condensed table-striped table-bordered offset-md-1">
+        <thead><tr class="row"><th class="col-md-2">idNote</th><th class="col-md-10">Запись</th></tr></thead>
+        <tbody>
+            <% for(var index in note) { %>
+                <tr class = "row" data-rowid = "<%= note[index].idNote %>">
+                    <td id="tdidNote<%= note[index].idNote %>" class="col-md-2"><%= note[index].idNote%></td>
+                    <td id="tdNoteText<%= note[index].idNote %>" class='col-md-10'><%= note[index].note%></td>                                                                    
+                </tr>
+             <% } %>
+        </tbody>        
+    </table>    
+    <% } %>
+</div>

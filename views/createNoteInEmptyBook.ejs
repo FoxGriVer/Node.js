@@ -1,0 +1,14 @@
+
+    <div class="offset-md-1">
+        <h1>Книга пуста, создайте новую запись !</h1>
+        <form action="/createNoteInEmptyBook" method="POST">
+            <div class="form-group">
+                <input type="hidden" name="bookId" value="<%=idBook%>"/><br>  
+                <label for="note">Новая запись в книге:</label>
+                <input class="form-control col-md-5" name="noteText" />
+            </div>                                
+            <div class="panel-body">
+                <button type="submit" class="btn btn-sm btn-primary">Сохранить</button>
+            </div>   
+        </form>
+    </div>    

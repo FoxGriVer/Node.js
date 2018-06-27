@@ -1,0 +1,38 @@
+<style>
+    .carpet {
+                padding-left: 5%;
+                padding-right: 15%;
+                font-size: 1.5em;
+            }
+    .row{
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+</style>
+<div class = "carpet">
+    <h2 class="offset-md-1">Предоставленный доступ к своим книгам</h2>
+
+    <% if(GrantedBooks.length != 0) { %>    
+        <table class="table table-condensed table-striped table-bordered offset-md-1">
+        <thead><tr class="row"><th class="col-md-3">Пользователь</th><th class="col-md-3">Книга</th><th class="col-md-3">Уровень доступа</th><th class="col-md-3">Изменить доступ</th></tr></thead>
+        <tbody>
+            <% for(var index in GrantedBooks) { %>
+                <tr class = "row">
+                    <td class="col-md-3"><%= GrantedBooks[index].nickName%></td>
+                    <td  class="col-md-3"><%= GrantedBooks[index].Title%></td>
+                    <% if(GrantedBooks[index].Can_Edit == 1) {%>  
+                        <td  class="col-md-3">Чтение и редакирование</td>
+                    <% } else { %>      
+                        <td  class="col-md-3">Только для чтения</td>
+                    <% }%> 
+                    <td class="col-md-3">
+                         <form  action="/access" method="GET">
+                            <button type="submit" class="btn btn-sm btn-primary">Изменить</button>
+                         </form>
+                    </td>                                                   
+                </tr>
+             <% } %>
+        </tbody>        
+    </table>    
+    <% } %>
+</div>

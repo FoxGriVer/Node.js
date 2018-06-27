@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">    
+    <title>Document</title>
+
+    <style>
+        .row{
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+        .addNoteBlock, .editNoteBlock{
+            margin-top: 40px;
+            margin-bottom: 40px;
+            display: none;
+        }        
+        .btnBeforeRestart{
+            margin-right: 4px;
+        }        
+        .openAddNoteBlock{
+            margin-left:68.25%;
+            margin-bottom: 40px;
+        }
+        .carpet {
+            padding-left: 5%;
+            padding-right: 15%;
+            font-size: 1.5em;
+        }
+        .btn-sm {
+            font-size: 0.8em;
+        }        
+    </style>
+</head>
+<body>    
+<div class="carpet">
+ <h2 class="offset-md-1">Список записей в книге "<%=note[0].title %>"</h2>
+    <div class="addNoteBlock">
+        <form id="addNoteForm" class="offset-md-1" name="addNoteForm2">
+            <div class="form-group">
+                <label for="note" class="col-sm-2">Новая запись в книге:</label>
+                <input class="form-control col-md-5" name="noteText" />
+            </div>        
+            <div class="panel-body">
+                <button type="submit" class="addLink btn btn-sm btn-primary">Сохранить</button>
+                <button type="reset" class="clearButton btn btn-sm btn-primary">Сбросить</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="editNoteBlock">
+        <form id="editNoteBlock" class="offset-md-1" name="editNoteBlock2">
+            <div class="form-group">
+                <input type="hidden" name="idNote" value="-1" />
+                <label for="note" class="col-sm-2">Изменить запись в книге:</label>
+                <input class="form-control col-md-5" name="noteText" placeholder="Введите текст записи"/>
+            </div>        
+            <div class="panel-body">
+                <button type="submit" class="editNote btn btn-sm btn-primary">Сохранить</button>
+                <button type="reset" class="clearButton btn btn-sm btn-primary">Сбросить</button>
+            </div>
+        </form>
+    </div>
+
+    <button class="openAddNoteBlock btn-sm btn-primary">Добавить запись</button>                        
+    <% if(note.length != 0) { %>    
+        <table class="table table-condensed table-striped table-bordered offset-md-1">
+        <thead><tr class="row"><th class="col-md-2">idNote</th><th class="col-md-8">Запись</th><th class="col-md-2"></th></tr></thead>
+        <tbody>
+            <% for(var index in note) { %>
+                <tr class = "row" data-rowid = "<%= note[index].idNote %>">
+                    <td id="tdidNote<%= note[index].idNote %>" class="col-md-2"><%= note[index].idNote%></td>
+                    <td id="tdNoteText<%= note[index].idNote %>" class='col-md-8'><%= note[index].note%></td> 
+                    <td class="col-md-2">
+                        <button class="openChangeNoteBlock btn-sm btn-primary" data-id="<%= note[index].idNote %>" >Изменить</button>
+                        <button class="removeLink btn-sm btn-primary" data-id="<%= note[index].idNote %>" >Удалить</button>                        
+                    </td>                                                
+                </tr>
+             <% } %>
+        </tbody>        
+    </table>    
+    <% } %>
+</div>       
+</body>
+</html>
+
+<script type="text/javascript">
+        
+        function DeleteNote(_path, _idNote) {
+            $.ajax({
+                url: _path + "/" + _idNote,
+                method: "DELETE",
+                success: function (idNote) {
+                    $("tr[data-rowid = '" + idNote +"']").remove();
+                },
+                error  : function() {
+                    alert("Ошибка");
+                }
+            })
+        }
+
+        function ChangeNote(_path, _idNote, _newNoteText){
+            $.ajax({
+                url: _path,
+                contentType: "application/json",
+                method: "PUT",
+                data: JSON.stringify({
+                    idNote: _idNote,
+                    newNoteText: _newNoteText
+                }),
+                success: function(changedNote) {
+                    $('.editNoteBlock').hide();
+                    $("tr[data-rowid = '" + changedNote.idNote +"']").each(function() {
+                        $(this).find("#tdNoteText"+changedNote.idNote).html(changedNote.newNoteText);
+                    });
+                },
+                error: function(){
+                    alert("Визуально ничего не изменилось");
+                }
+            })
+        }
+
+        function AddNote(_path, _noteText){
+            $.ajax({
+                url: _path,
+                contentType: "application/json",
+                method: "POST",
+                data: JSON.stringify({
+                    noteText: _noteText
+                }),
+                success: function(_createdNote) {
+                    $('.addNoteBlock').hide();
+                    $("table tbody").append(row(_createdNote));
+                    document.getElementById("addNoteForm").elements["noteText"].value = "";
+                },
+                error: function(){
+                    alert("Визуально ничего не изменилось");
+                }
+            })
+        }
+
+        $('body').on('click', '.changeLink', function (){
+            var ourUrl = window.location;
+            var idNote = $(this).data("id");
+            ChangeNote(ourUrl, idNote);
+        });
+
+        $('body').on('click', '.removeLink', function (){
+            var ourUrl = window.location;
+            var idNote = $(this).data("id");
+            DeleteNote(ourUrl, idNote);
+        });
+
+        $('body').on('click', '.clearButton', function (){
+            $('.addNoteBlock').hide();
+            $('.editNoteBlock').hide();
+        });
+
+        $("#addNoteForm").submit(function(e){
+            e.preventDefault();
+            let ourUrl = window.location;
+            let noteText = this.elements["noteText"].value;
+            AddNote(ourUrl, noteText);
+        });
+
+        $("#editNoteBlock").submit(function(e){
+            e.preventDefault();
+            let ourUrl = window.location;
+            let idNote = document.getElementById("editNoteBlock").elements["idNote"].value;
+            let newNoteText = this.elements["noteText"].value;
+            ChangeNote(ourUrl, idNote, newNoteText);
+        });
+
+        $('body').on('click', '.openAddNoteBlock', function (){
+            if($('.addNoteBlock').is(":visible")){
+                $('.addNoteBlock').hide();
+            }
+            else {                
+                $('.addNoteBlock').show();
+            }
+        });
+
+        $('body').on('click', '.openChangeNoteBlock', function (){
+            if($('.editNoteBlock').is(":visible")){
+                $('.editNoteBlock').hide();
+            }
+            else {
+                let idNote = $(this).data("id");
+                let noteText = document.getElementById('tdNoteText'+idNote).innerHTML;
+                document.getElementById("editNoteBlock").elements["noteText"].value = noteText;                
+                document.getElementById("editNoteBlock").elements["idNote"].value = idNote;
+                $('.editNoteBlock').show();
+            }
+        });
+        
+        var row = function(note) {
+            return "<tr class = 'row' data-rowid = '" + note.idNote + "'>"+
+                    "<td class='col-md-2'>"+note.idNote+"</td>"+
+                    "<td id='tdNoteText"+note.idNote+"' class='col-md-8'>" + note.noteText + "</td>"+ 
+                    "<td class='col-md-2'>"+
+                        "<button class='btnBeforeRestart openChangeNoteBlock btn-sm btn-primary' data-id= '" + note.idNote + "' >Изменить</button>"+
+                        "<button class='removeLink btn-sm btn-primary' data-id= '" + note.idNote + "' >Удалить</button>"+
+                    "</td>"+                                         
+                "</tr>";
+        }    
+</script>

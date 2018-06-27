@@ -1,0 +1,57 @@
+<style>
+    .carpet {
+                padding-left: 5%;
+                padding-right: 15%;
+                font-size: 1.5em;
+            }
+    .row{
+            margin-left: 0px;
+            margin-right: 0px;
+        }
+</style>
+<div class = "carpet">
+    <h2 class="offset-md-1">Все книги</h2>
+
+    <% if(AllBooks.length != 0) { %>    
+        <table class="table table-condensed table-striped table-bordered offset-md-1">
+        <thead><tr class="row"><th class="col-md-2">id Книги</th><th class="col-md-4">Книга</th><th class="col-md-3">Владелец</th><th class="col-md-3">Действия</th></tr></thead>
+        <tbody>
+            <% for(var index in AllBooks) { %>
+                <tr class = "row">
+                    <td class="col-md-2"><%= AllBooks[index].idBook %></td>
+                    <td  class="col-md-4"><%= AllBooks[index].Title %></td>  
+                    <td  class="col-md-3"><%= AllBooks[index].nickName %></td>
+                    <td  class="col-md-3">
+                        <form  action="/" method="GET">
+                            <a href="/book/<%= AllBooks[index].idBook %>">Просмотреть</a>
+                        </form>   
+                    </td>                                                                                                                                                           
+                </tr>
+             <% } %>
+        </tbody>        
+    </table>    
+    <% } %>
+</div>
+
+<script type="text/javascript">
+/*
+    function ShowNotes(_idBook) {
+            $.ajax({
+                url: "/book/" + _idBook,
+                method: "GET",
+                success: function () {
+                },
+                error  : function() {
+                    alert("Ошибка");
+                }
+            })
+        }
+
+    $('body').on('click', '.showBtn', function (){
+            var ourUrl = window.location;
+            var idBook = $(this).data("id");
+            console.log(idBook);
+            ShowNotes(idBook);
+        });
+*/
+</script>

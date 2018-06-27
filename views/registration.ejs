@@ -1,0 +1,41 @@
+<style>
+        .registrationBlock{
+            margin-top: 10%;
+            padding-left:30%;
+            padding-right: 30%;
+        }
+        .fields{
+            
+        }
+        .btnReg {
+        }
+        .customRow {
+            margin-bottom: 4%;   
+            padding-left: 15%;
+            padding-right: 15%;
+            display: inline-block;         
+        }
+        .customForm {
+            width: 100%;
+        }
+</style>
+    <div class="registrationBlock offset-md-4 text-center">
+        <h2>Регистрация пользователя</h2>
+        <form action="/createUser" method="POST">
+            <div class="fields">
+                <div class="form-group fields">
+                    <div class="row customRow">
+                        <label class="">Логин:</label>
+                        <input class="form-control customForm" name="login" />
+                    </div>    
+                    <div class="row customRow">
+                        <label>Пароль:</label>
+                        <input type="password" class="form-control customForm" name="password" />
+                    </div>                                                
+                </div>  
+            </div>                                          
+            <div class="btnReg panel-body">
+                <button type="submit" class="btn btn-sm btn-primary">Зарегистрироваться</button>
+            </div>   
+        </form>
+    </div>    

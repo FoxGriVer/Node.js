@@ -1,0 +1,22 @@
+<div class="col-md-offset-1">
+    <h2>Список всех пользователей зарегистрированных в системе</h2>
+
+    <% if(allUsers.length != 0) { %>     
+        <ul>
+            <% for(var index in allUsers) { %>
+                <li><%=allUsers[index].nickName %></li>
+            <% } %>
+        </ul>          
+    <% } %>
+
+    <h2>Панель управления</h2>
+    <div class="panel-body">
+    <form action="/createUserAdmin" method="GET">
+        <button type="submit" class="btn btn-sm btn-primary">Добавить пользователя</button>
+    </form>
+    <br>
+    <form action="/deleteUser" method="GET">
+        <button type="submit" class="btn btn-sm btn-primary">Удалить пользователя</button>
+    </form>
+    </div>
+</div>
